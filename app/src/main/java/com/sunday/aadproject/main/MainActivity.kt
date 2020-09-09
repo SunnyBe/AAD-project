@@ -9,19 +9,26 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sunday.aadproject.R
+import com.sunday.aadproject.data.LeaderSkillService
+import com.sunday.aadproject.data.ServiceBuilder
 import com.sunday.aadproject.main.util.Content
 import com.sunday.aadproject.submission.SubmissionActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     lateinit var viewPager: ViewPager2
     val defaultAdapter = PagerListAdapter(mutableListOf())
+    lateinit var leaderSkillService: LeaderSkillService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewPager = findViewById<ViewPager2>(R.id.main_view_pager)
 
+        leaderSkillService = ServiceBuilder.buildService(
+            service = LeaderSkillService::class.java
+        )
         // Item select listener using Material toolbar
         toolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -61,8 +68,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> LeaderboardFragment()
-                else -> SkillboardFragment()
+                0 -> LeaderboardFragment(leaderSkillService)
+                else -> SkillboardFragment(leaderSkillService)
             }
         }
 
