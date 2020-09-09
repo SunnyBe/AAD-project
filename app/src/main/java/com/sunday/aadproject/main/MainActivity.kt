@@ -1,5 +1,6 @@
 package com.sunday.aadproject.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sunday.aadproject.R
 import com.sunday.aadproject.main.util.Content
+import com.sunday.aadproject.submission.SubmissionActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         toolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.submit_icon -> {
+                    startActivity(Intent(this, SubmissionActivity::class.java))
                     true
                 }
                 else -> false
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 main_tab_layout,
                 findViewById<ViewPager2>(R.id.main_view_pager)
             ) { tab, position ->
-                tab.text = Content.slideList()[position]
+                tab.text = Content.slideList()[position].capitalize()
             }.attach()
 
         }
