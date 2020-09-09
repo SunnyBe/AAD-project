@@ -11,4 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="leaderboard_label">LeaderBoard</string>
     <string name="submit_label">submit</string>
+    <string name="api_request_failed">API request failed</string>
+    <string name="no_internet">No Internet Connection!</string>
+    <string name="wrong_entries">Enter valid entries</string>
 </resources>
