@@ -28,7 +28,8 @@ class PagerListAdapter(val pagerItems: MutableList<PagerItem>) : RecyclerView.Ad
         Picasso.get()
             .load(pagerItem.badgeUrl)
             .resize(50, 50)
-            .centerCrop()
+//            .centerCrop()
+            .centerInside()
             .placeholder(R.drawable.skill_iq_trimmed)
             .into(holder.itemView.itemImage)
     }

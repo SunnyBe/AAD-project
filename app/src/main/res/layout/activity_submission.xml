@@ -6,29 +6,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".submission.SubmissionActivity"
-    android:theme="@style/AppTheme.BackgroundDark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/main_tab_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:orientation="vertical"
-        android:theme="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
-            android:layout_width="170dp"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="center"
-            app:navigationIcon="@color/cardview_light_background"
-            android:background="@drawable/ic_launch"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@android:color/white" />
+            <TextView
+                android:id="@+id/navigation_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/toolbar"
+
+                android:textColor="@android:color/white"
+                android:textColorHighlight="@android:color/white"
+                app:drawableEndCompat="@drawable/ic_back_arrow" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_launch_logo"
+                android:layout_gravity="center"
+                app:titleTextColor="#fff" />
+        </RelativeLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -41,7 +55,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
         android:gravity="center"
-        android:text="Project Submission"
+        android:text="@string/project_submission"
         android:textColor="#FF9800"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -53,26 +67,25 @@
     <EditText
         android:id="@+id/firstNameEntry"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/AppTheme.Submission.EntryBox"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:hint="First Name"
+        android:hint="@string/first_name_label"
         app:layout_constraintBottom_toTopOf="@+id/emailEntry"
         app:layout_constraintEnd_toStartOf="@+id/lastNameEntry"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/projectSubmissionLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/projectSubmissionLabel"
+        />
 
     <EditText
         android:id="@+id/lastNameEntry"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/AppTheme.Submission.EntryBox"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:hint="Last Name"
-        android:ems="10"
+        android:hint="@string/last_name_hint"
         app:layout_constraintBottom_toBottomOf="@+id/firstNameEntry"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/firstNameEntry"
@@ -81,13 +94,13 @@
     <EditText
         android:id="@+id/emailEntry"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/AppTheme.Submission.EntryBox"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:hint="Email Address"
+        android:hint="@string/email_address_label"
+        android:background="@drawable/edit_text_frame"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/githubLinkEntry"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,26 +110,28 @@
     <EditText
         android:id="@+id/githubLinkEntry"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="24dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Project on GITHUB (link)"
+        style="@style/AppTheme.Submission.EntryBox"
+        android:hint="@string/github_hint"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEntry" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="32dp"
-        android:text="Submit"
+        android:text="@string/submit_label"
+        style="@style/AppTheme.SuccessButton"
+        app:backgroundTintMode="src_over"
+        app:backgroundTint="@color/colorAccent"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
