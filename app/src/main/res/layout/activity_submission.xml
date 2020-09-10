@@ -60,7 +60,7 @@
         android:gravity="center_horizontal"
         android:text="@string/project_submission"
         android:background="@drawable/title_text_underline"
-        android:textColor="#FF9800"
+        android:textColor="@color/colorAccent"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/firstNameEntry"
