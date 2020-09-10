@@ -20,7 +20,7 @@
 
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
 
         <activity
             android:name=".submission.SubmissionActivity"
-            android:theme="@style/AppTheme.BackgroundDark">
+            android:theme="@style/AppTheme.Submission">
         </activity>
     </application>
 

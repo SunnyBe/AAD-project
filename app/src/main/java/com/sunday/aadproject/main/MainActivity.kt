@@ -14,12 +14,10 @@ import com.sunday.aadproject.data.ServiceBuilder
 import com.sunday.aadproject.main.util.Content
 import com.sunday.aadproject.submission.SubmissionActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     lateinit var viewPager: ViewPager2
-    val defaultAdapter = PagerListAdapter(mutableListOf())
     lateinit var leaderSkillService: LeaderSkillService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +27,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         leaderSkillService = ServiceBuilder.buildService(
             service = LeaderSkillService::class.java
         )
-        // Item select listener using Material toolbar
-        toolbar?.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.submit_icon -> {
-                    startActivity(Intent(this, SubmissionActivity::class.java))
-                    true
-                }
-                else -> false
-            }
+
+        toolbarSubmitButton?.setOnClickListener {
+            startActivity(Intent(this, SubmissionActivity::class.java))
         }
 
         findViewById<ViewPager2>(R.id.main_view_pager)?.apply {
@@ -48,7 +40,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             ) { tab, position ->
                 tab.text = Content.slideList()[position].capitalize()
             }.attach()
-
         }
     }
 
@@ -68,8 +59,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> LeaderboardFragment(leaderSkillService)
-                else -> SkillboardFragment(leaderSkillService)
+                0 -> LeaderboardFragment(leaderSkillService, listLoadingProgress)
+                else -> SkillboardFragment(leaderSkillService, listLoadingProgress)
             }
         }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sunday.aadproject.R
 import com.sunday.aadproject.data.ServiceBuilder
@@ -13,6 +14,7 @@ import com.sunday.aadproject.main.util.internetConnected
 import com.sunday.aadproject.main.util.notEmpty
 import com.sunday.aadproject.main.util.toastMsg
 import kotlinx.android.synthetic.main.activity_submission.*
+import kotlinx.android.synthetic.main.dialog_confirm.*
 import kotlinx.android.synthetic.main.dialog_confirm.view.*
 import kotlinx.android.synthetic.main.dialog_status.view.*
 import retrofit2.Call
@@ -37,8 +39,16 @@ class SubmissionActivity : AppCompatActivity(R.layout.activity_submission) {
                     email = emailEntry.text.toString(),
                     github = githubLinkEntry.text.toString()
                 )
-                if (internetConnected()) confirmDialog(submissionEntity) else toastMsg(resources.getString(R.string.no_internet))
+                if (internetConnected()) {
+                    showProgress()
+                    confirmDialog(submissionEntity)
+                } else toastMsg(resources.getString(R.string.no_internet))
             } else toastMsg(resources.getString(R.string.wrong_entries))
+        }
+
+        navigation_back?.setOnClickListener {
+            hideProgress()
+            this.finish()
         }
     }
 
@@ -46,6 +56,10 @@ class SubmissionActivity : AppCompatActivity(R.layout.activity_submission) {
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_confirm, null)
         val dialog = materialDialog(view).show()
 
+        dialog.cancelIcon?.setOnClickListener {
+            hideProgress()
+            if (dialog.isShowing) dialog.dismiss()
+        }
         view.dialogSubmit?.setOnClickListener {
             dialog.dismiss()
             sendRequestToApi(
@@ -54,7 +68,9 @@ class SubmissionActivity : AppCompatActivity(R.layout.activity_submission) {
                 submissionEntity.email,
                 submissionEntity.github
             )
-            presentDialog(true)
+        }
+        dialog.setOnCancelListener {
+            hideProgress()
         }
     }
 
@@ -62,25 +78,26 @@ class SubmissionActivity : AppCompatActivity(R.layout.activity_submission) {
         submissionService.submitProject(name, lastName, email, github)
             .enqueue(object : Callback<Void> {
                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                    toastMsg(t.message ?: "")
+                    hideProgress()
+                    presentDialog(false)
                 }
 
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    toastMsg(response.body().toString())
+                    hideProgress()
+                    presentDialog(true)
                 }
-
             })
     }
 
     private fun presentDialog(success: Boolean) {
         val view = if (success) {
             LayoutInflater.from(this).inflate(R.layout.dialog_status, null).apply {
-                statusIcon?.setImageResource(R.drawable.ic_launch)
+                statusIcon?.setImageResource(R.drawable.ic_done_successful)
                 statusMsg?.text = "Submission Successful"
             }
         } else {
             LayoutInflater.from(this).inflate(R.layout.dialog_status, null).apply {
-                statusIcon?.setImageResource(R.drawable.ic_launch)
+                statusIcon?.setImageResource(R.drawable.ic_error)
                 statusMsg?.text = "Submission was not successful"
             }
         }
@@ -90,5 +107,13 @@ class SubmissionActivity : AppCompatActivity(R.layout.activity_submission) {
     private fun materialDialog(view: View): MaterialAlertDialogBuilder {
         return MaterialAlertDialogBuilder(this)
             .setView(view)
+    }
+
+    private fun showProgress() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress() {
+        if (progressBar.isVisible) progressBar.visibility = View.GONE
     }
 }
