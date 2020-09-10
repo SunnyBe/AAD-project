@@ -10,6 +10,7 @@ class SplashActivity : AppCompatActivity(R.layout.activity_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Navigate as soon as splash acitivty is created
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
