@@ -60,7 +60,9 @@ class SkillboardFragment(private val apiService: LeaderSkillService, private val
 
     override fun onRefresh() {
         skillSwipeToRefresh?.isRefreshing = false
-        fetchList()
+        activity?.apply{
+            if (internetConnected()) fetchList() else toastMsg(resources.getString(R.string.no_internet))
+        }
     }
 
     private fun showProgress() {

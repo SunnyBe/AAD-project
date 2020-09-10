@@ -20,4 +20,7 @@
     <string name="first_name_label">First Name</string>
     <string name="email_address_label">Email Address</string>
     <string name="project_submission">Project Submission</string>
+    <string name="yes_label">Yes</string>
+    <string name="question_mark">\?</string>
+    <string name="are_you_sure">Are you sure</string>
 </resources>

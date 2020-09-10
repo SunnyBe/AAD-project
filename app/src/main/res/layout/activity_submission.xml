@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".submission.SubmissionActivity"
+    android:theme="@style/AppTheme.Submission"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -14,6 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
+        android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,10 +31,11 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@+id/toolbar"
-
+                android:drawableTint="@android:color/white"
+                android:drawablePadding="8dp"
                 android:textColor="@android:color/white"
                 android:textColorHighlight="@android:color/white"
-                app:drawableEndCompat="@drawable/ic_back_arrow" />
+                app:drawableStartCompat="@drawable/ic_back_arrow" />
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="wrap_content"
@@ -48,14 +51,15 @@
 
     <TextView
         android:id="@+id/projectSubmissionLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="24dp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="@string/project_submission"
+        android:background="@drawable/title_text_underline"
         android:textColor="#FF9800"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -116,6 +120,7 @@
         android:layout_marginBottom="24dp"
         style="@style/AppTheme.Submission.EntryBox"
         android:hint="@string/github_hint"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +141,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/githubLinkEntry" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
